@@ -1,4 +1,4 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder, };
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -16,14 +16,8 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let factory = move || {
-        App::new()
-            .configure(app_config)
-    };
-    HttpServer::new(factory)
-        .bind("127.0.0.1:8000")?
-        .run()
-        .await
+    let factory = move || App::new().configure(app_config);
+    HttpServer::new(factory).bind("127.0.0.1:8000")?.run().await
 }
 
 fn app_config(service_config: &mut web::ServiceConfig) {
